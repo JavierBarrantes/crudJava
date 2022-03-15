@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head th:replace="plantillas/plantilla1 ::head">
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+        <div class = "container">
+            <header th:replace="plantillas/plantilla1 ::header">
+            </header>
+
+            <h1 class="card-header">Datos del Cliente</h1>
+            <div class = "row justify-content-center">
+                <div class="col-8">
+                    <form th:action="@{/guardarCliente}" method="post" th:object="${cliente}">
+                        <input type="hidden" name="idCliente" th:field="*{idCliente}"/>
+
+                        <div class="form-group">
+                            <label for="nombre" class="form-label">Nombre:</label>
+                            <input type="text" name="nombre" class="form-control" th:field="*{nombre}"/>
+                            <span class="text-danger font-italic"
+                                  th:if="${#fields.hasErrors('nombre')}"
+                                  th:errors="*{nombre}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="apellido" class="form-label">Apellido:</label>
+                            <input type="text" name="apellido" class="form-control" th:field="*{apellido}"/>
+                            <span class="text-danger font-italic"
+                                  th:if="${#fields.hasErrors('apellido')}"
+                                  th:errors="*{apellido}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" name="email" class="form-control" th:field="*{email}"/>
+                            <span class="text-danger font-italic"
+                                  th:if="${#fields.hasErrors('email')}"
+                                  th:errors="*{email}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono" class="form-label">Telefono:</label>
+                            <input type="text" name="telefono" class="form-control" th:field="*{telefono}"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="limiteCredito" class="form-label">Limite de Crédito:</label>
+                            <input type="number" step="0.01" name="limiteCredito" class="form-control" th:field="*{limiteCredito}"/>
+                            <span class="text-danger font-italic"
+                                  th:if="${#fields.hasErrors('limiteCredito')}"
+                                  th:errors="*{limiteCredito}"></span>
+                        </div>
+                        <div class="mt-2">
+                            <input type="submit" name="btnGuardar" value="Guardar" 
+                                   class="btn btn-primary"/>
+
+                            <a th:href="@{/clientes}" 
+                               class="btn btn-warning">Regresar</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

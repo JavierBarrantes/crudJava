@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+    <head th:replace="plantillas/plantilla1 ::head">
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div class="container">
+            <header th:replace="plantillas/plantilla1 ::header"></header>
+            <h1>Lista de Productos</h1>
+              <div class="row mt-2 mb-2">
+                <div class="col-9">
+                    <form th:action="@{/filtrarProductos}" method="post">
+                        <div class="input-group">
+                            <input type="text" name="txtTexto" 
+                                   placeholder="Escriba la descripcion del producto"
+                                   class="form-control"/>
+                            <input type="submit" name="btnFiltrar"
+                                   class="btn btn-primary" value="Buscar"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-3">
+                    <a th:href="@{/nuevoProducto}" class="btn btn-primary mx-auto"><i class="fas fa-user-plus"></i>Nuevo Producto</a>
+                </div>
+            </div>
+            <div th:if="${productos != null and !productos.empty}">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Existencia</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item:${productos}">
+                            <td th:text ="${item.idProducto}"></td>
+                            <td th:text ="${item.descripcion}"></td>
+                            <td th:text ="${item.precio}"></td>
+                            <td th:text ="${item.existencia}"></td>
+                               <td>
+                                <a th:href ="@{/editarProducto/} + ${item.idProducto}">Editar <i class="fas fa-user-plus"></i></a> |
+                                <a th:href ="@{/eliminarProducto(idProducto=${item.idProducto})}">Eliminar <i class="fas fa-user-times"></i></a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+            <div th:if="${msj!=null}" >
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong th:text ="${msj}"></strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div th:if="${productos == null or productos.empty}">
+                No hay Productos en la Base de Datos
+            </div>
+        </div>
+    </body>
+</html>
